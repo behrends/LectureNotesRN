@@ -7,12 +7,17 @@ export default class Content extends React.Component {
   state = { selected: false };
 
   render() {
-    let selectedStyle = { backgroundColor: 'orange' };
+    let selectedStyle = null;
     // 2: lesender Zugriff auf Eigenschaften des Zustands (this.state)
     const currentState = this.state.selected;
-    if (currentState === false) selectedStyle = null;
+    if (currentState)
+      selectedStyle = { backgroundColor: 'lightgreen' };
 
     // 3: State/Zustand wird verändert mit this.setState({....})
+    // ändert sich der state, dann wird die Komponente neu dargestellt
+    // d.h. render() wird vom Framework automatisch aufgerufen
+    // --> nie auf state direkt zugreifen (NICHT -> this.state.selected = true)
+    // state IMMER mit dem Aufruf von this.setState({}) ändern
     return (
       <Pressable
         onPress={() => this.setState({ selected: !currentState })}
