@@ -1,12 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 
 export default function Content() {
   return (
-    <Text style={styles.content}>
-      Inhalt der Notiz der auch sehr lang sein kann und über mehrere
-      Zeilen geht
-    </Text>
+    <Pressable onPress={() => alert('ok!!!!')}>
+      <Text style={styles.content}>
+        Inhalt der Notiz der auch sehr lang sein kann und über mehrere
+        Zeilen geht
+      </Text>
+    </Pressable>
   );
 }
 
