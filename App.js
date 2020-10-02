@@ -6,7 +6,9 @@ import Content from './components/Content';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Title />
+      <Title text="Titel Nr.1" />
+      <Content />
+      <Title text="Titel Nr.2" />
       <Content />
     </View>
   );
