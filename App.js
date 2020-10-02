@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Title from './components/Title';
 
 export default function App() {
-  const title = 'Titel meiner Notiz';
   const text =
     'Inhalt der Notiz der auch sehr lang sein kann über mehrere Zeilen';
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
+      <Title />
       <Text style={styles.content}>{text}</Text>
     </View>
   );
@@ -20,10 +20,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start',
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
   },
   content: {
     fontSize: 18,
