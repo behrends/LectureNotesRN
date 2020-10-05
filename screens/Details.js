@@ -1,7 +1,15 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Button, Text, View } from 'react-native';
 
-export default function Details({ route }) {
-  const title = route.params.title;
-  return <Text style={{ marginTop: 100 }}>{title}</Text>;
+export default class Details extends React.Component {
+  render() {
+    const title = this.props.route.params.title;
+    const navigation = this.props.navigation;
+    return (
+      <View>
+        <Text style={{ marginTop: 100 }}>{title}</Text>
+        <Button title="Zurück" onPress={() => navigation.goBack()} />
+      </View>
+    );
+  }
 }
