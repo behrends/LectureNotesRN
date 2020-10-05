@@ -1,17 +1,17 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import Title from './components/Title';
-import Content from './components/Content';
+import { StyleSheet, Text, View } from 'react-native';
+
+// Home-Screen für die Liste der Notizen
+function Home() {
+  return <Text style={{ marginTop: 100 }}>HOME</Text>;
+}
+// Screen für Einstellungen
+function Settings() {
+  return <Text style={{ marginTop: 100 }}>SETTINGS</Text>;
+}
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Title>Erster Titel</Title>
-      <Content />
-      <Title>Zweiter Titel</Title>
-      <Content />
-    </View>
-  );
+  return <Home />;
 }
 
 const styles = StyleSheet.create({
