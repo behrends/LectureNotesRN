@@ -15,7 +15,14 @@ export default function Home({ navigation }) {
       <FlatList
         style={styles.list}
         data={noteList}
-        renderItem={({ item }) => <NoteListItem title={item.title} />}
+        renderItem={({ item }) => (
+          <NoteListItem
+            title={item.title}
+            onPress={() =>
+              navigation.navigate('Details', { title: item.title })
+            }
+          />
+        )}
       />
     </View>
   );

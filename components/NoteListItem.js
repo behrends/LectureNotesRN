@@ -1,8 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 
 export default function NoteListItem(props) {
-  return <Text style={styles.text}>{props.title}</Text>;
+  return (
+    <Pressable onPress={props.onPress}>
+      <Text style={styles.text}>{props.title}</Text>
+    </Pressable>
+  );
 }
 
 const styles = StyleSheet.create({
