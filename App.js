@@ -12,8 +12,17 @@ function Settings() {
   return <Text style={{ marginTop: 100 }}>SETTINGS</Text>;
 }
 
+const Tab = createBottomTabNavigator();
+
 export default function App() {
-  return <Home />;
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Settings" component={Settings} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
 }
 
 const styles = StyleSheet.create({
