@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import NoteListItem from '../components/NoteListItem';
 
 const noteList = [
   { id: '1', title: 'Notiz' },
@@ -12,8 +13,9 @@ export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <FlatList
+        style={styles.list}
         data={noteList}
-        renderItem={({ item }) => <Text>{item.title}</Text>}
+        renderItem={({ item }) => <NoteListItem title={item.title} />}
       />
     </View>
   );
@@ -24,5 +26,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  list: {
+    paddingHorizontal: 10,
+    width: '100%',
   },
 });
