@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import * as Icon from '@expo/vector-icons';
 
 import Home from './screens/Home';
 import Settings from './screens/Settings';
@@ -13,7 +14,11 @@ const Stack = createStackNavigator();
 
 function HomeStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: 'lavender' },
+      }}
+    >
       <Stack.Screen name="HomeScreen" component={Home} />
       <Stack.Screen name="Details" component={Details} />
     </Stack.Navigator>
@@ -23,9 +28,41 @@ function HomeStack() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Settings" component={Settings} />
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let icon;
+
+            if (route.name === 'Home') {
+              icon = focused ? 'home' : 'home-outline';
+            } else if (route.name === 'Settings') {
+              icon = focused ? 'settings' : 'settings-outline';
+            }
+
+            return (
+              <Icon.MaterialCommunityIcons
+                name={icon}
+                size={size}
+                color={color}
+              />
+            );
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: 'blueviolet',
+          style: { backgroundColor: 'lavender' },
+        }}
+      >
+        <Tab.Screen
+          name="Home"
+          component={HomeStack}
+          options={{ title: 'Notizen' }}
+        />
+        <Tab.Screen
+          name="Settings"
+          component={Settings}
+          options={{ title: 'Einstellungen' }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
