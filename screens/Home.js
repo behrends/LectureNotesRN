@@ -7,11 +7,15 @@ export default function Home({ navigation }) {
     <View style={styles.container}>
       <Button
         title="Notiz 1"
-        onPress={() => navigation.navigate('Details')}
+        onPress={() =>
+          navigation.navigate('Details', { title: 'Notiz 1' })
+        }
       />
       <Button
         title="Notiz 2"
-        onPress={() => navigation.navigate('Details')}
+        onPress={() =>
+          navigation.navigate('Details', { title: 'Notiz 2' })
+        }
       />
     </View>
   );
