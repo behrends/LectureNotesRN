@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { Button, StyleSheet, TextInput, View } from 'react-native';
 
 export default class Edit extends React.Component {
   state = { input: this.props.route.params.title };
@@ -11,6 +11,14 @@ export default class Edit extends React.Component {
           style={styles.input}
           value={this.state.input}
           onChangeText={(text) => this.setState({ input: text })}
+        />
+        <Button
+          title="Speichern"
+          onPress={() =>
+            this.props.navigation.navigate('Details', {
+              title: this.state.input,
+            })
+          }
         />
       </View>
     );
