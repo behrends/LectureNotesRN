@@ -7,6 +7,7 @@ import * as Icon from '@expo/vector-icons';
 import Home from './screens/Home';
 import Settings from './screens/Settings';
 import Details from './screens/Details';
+import Edit from './screens/Edit';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,6 +22,7 @@ function HomeStack() {
     >
       <Stack.Screen name="HomeScreen" component={Home} />
       <Stack.Screen name="Details" component={Details} />
+      <Stack.Screen name="Edit" component={Edit} />
     </Stack.Navigator>
   );
 }

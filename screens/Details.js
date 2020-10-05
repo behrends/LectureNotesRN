@@ -8,7 +8,12 @@ export default class Details extends React.Component {
     return (
       <View>
         <Text style={{ marginTop: 100 }}>{title}</Text>
-        <Button title="Zurück" onPress={() => navigation.goBack()} />
+        <Button
+          title="Bearbeiten"
+          onPress={() =>
+            navigation.navigate('Edit', { title: title })
+          }
+        />
       </View>
     );
   }
