@@ -24,10 +24,14 @@ async function readDataFromDB() {
 }
 
 export default class Home extends React.Component {
-  render() {
+  componentDidMount() {
+    // wird nach render ausgeführt!!!! ---> Lebenszyklus / Lifecycle
     populateDB();
     readDataFromDB();
+  }
 
+  render() {
+    console.log('render');
     return (
       <View style={styles.container}>
         <FlatList
