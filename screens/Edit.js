@@ -17,6 +17,8 @@ export default class Edit extends React.Component {
           title="Speichern"
           onPress={() => {
             Storage.createNote(this.state.input);
+            // TODO: zurück zum Home Screen (bei neuer Notiz)
+            // TODO: neue Notiz soll im Home Screen erscheinen
             this.props.navigation.navigate('Details', {
               title: this.state.input,
             });
