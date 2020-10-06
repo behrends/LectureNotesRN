@@ -6,16 +6,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 export default class Home extends React.Component {
   state = { notes: [] };
 
-  populateDB() {
-    const noteList = [
-      { id: '1', title: 'Notiz 12' },
-      { id: '2', title: 'Bemerkung 34' },
-      { id: '3', title: 'Witz 5678' },
-    ];
-    const jsonData = JSON.stringify(noteList);
-    AsyncStorage.setItem('notes', jsonData);
-  }
-
   async readDataFromDB() {
     const data = await AsyncStorage.getItem('notes'); // siehe Promises
     const notes = JSON.parse(data); // JSON-String --> JavaScript-Objekt
@@ -34,7 +24,6 @@ export default class Home extends React.Component {
 
   componentDidMount() {
     // wird nach render ausgeführt!!!! ---> Lebenszyklus / Lifecycle
-    this.populateDB();
     this.readDataFromDB();
   }
 
