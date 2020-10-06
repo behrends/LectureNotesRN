@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { Button, FlatList, StyleSheet, View } from 'react-native';
 import NoteListItem from '../components/NoteListItem';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -56,6 +56,7 @@ export default class Home extends React.Component {
             />
           )}
         />
+        <Button title="Neue Notiz" onPress={() => alert('!!!!!')} />
       </View>
     );
   }
