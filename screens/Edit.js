@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
+import Storage from '../util/Storage';
 
 export default class Edit extends React.Component {
   state = { input: this.props.route.params?.title };
@@ -14,11 +15,12 @@ export default class Edit extends React.Component {
         />
         <Button
           title="Speichern"
-          onPress={() =>
+          onPress={() => {
+            Storage.createNote(this.state.input);
             this.props.navigation.navigate('Details', {
               title: this.state.input,
-            })
-          }
+            });
+          }}
         />
       </View>
     );
