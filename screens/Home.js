@@ -1,12 +1,12 @@
 import React from 'react';
 import {
+  Alert,
   Button,
   FlatList,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import NoteListItem from '../components/NoteListItem';
 import Storage from '../util/Storage';
 
@@ -26,12 +26,23 @@ export default class Home extends React.Component {
     this.setState({ notes: notes });
   }
 
-  deleteNote(id) {
-    // TODO alert(`Wirklich Notiz mit ID ${id} löschen?`);
+  doDeleteNote(id) {
     const currentNotes = this.state.notes;
     const newNotes = currentNotes.filter((item) => item.id !== id);
     Storage.saveNotes(newNotes);
     this.setState({ notes: newNotes });
+  }
+
+  deleteNote(id) {
+    Alert.alert(
+      'Notiz löschen',
+      `Wirklich Notiz mit ID ${id} löschen?`,
+      [
+        { text: 'Abbrechen', style: 'cancel' },
+        { text: 'OK', onPress: () => this.doDeleteNote(id) },
+      ],
+      { cancelable: true }
+    );
   }
 
   componentDidMount() {
