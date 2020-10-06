@@ -21,11 +21,6 @@ function NoteListEmpty() {
 export default class Home extends React.Component {
   state = { notes: [] };
 
-  async readDataFromDB() {
-    const notes = await Storage.readDataFromDB();
-    this.setState({ notes: notes });
-  }
-
   doDeleteNote(id) {
     const currentNotes = this.state.notes;
     const newNotes = currentNotes.filter((item) => item.id !== id);
@@ -45,8 +40,9 @@ export default class Home extends React.Component {
     );
   }
 
-  componentDidMount() {
-    this.readDataFromDB();
+  async componentDidMount() {
+    const notes = await Storage.readDataFromDB();
+    this.setState({ notes: notes });
   }
 
   render() {
