@@ -19,9 +19,13 @@ export default class Edit extends React.Component {
             Storage.createNote(this.state.input);
             // TODO: zurück zum Home Screen (bei neuer Notiz)
             // TODO: neue Notiz soll im Home Screen erscheinen
-            this.props.navigation.navigate('Details', {
-              title: this.state.input,
-            });
+            if (this.props.route.params?.title) {
+              this.props.navigation.navigate('Details', {
+                title: this.state.input,
+              });
+            } else {
+              this.props.navigation.goBack();
+            }
           }}
         />
       </View>
