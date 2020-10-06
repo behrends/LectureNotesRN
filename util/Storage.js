@@ -13,8 +13,9 @@ export default class Storage {
 
   static async updateNote(note) {
     const data = await AsyncStorage.getItem('notes');
-    let notes = JSON.parse(data);
-    if (notes === null) notes = [];
+    const notes = JSON.parse(data);
+    const index = notes.findIndex((item) => item.id === note.id);
+    notes[index] = note;
     this.saveNotes(notes);
   }
 
