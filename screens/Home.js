@@ -9,25 +9,23 @@ const noteList = [
   { id: '3', title: 'Witz' },
 ];
 
-function populateDB() {
-  console.log('---> populateDB');
-  // JSON – JavaScript Object Notation
-  // AsyncStorage.setItem(KEY, VALUE/JSON-String)
-  const jsonData = JSON.stringify(noteList);
-  AsyncStorage.setItem('notes', jsonData);
-}
-
-async function readDataFromDB() {
-  const data = await AsyncStorage.getItem('notes'); // siehe Promises
-  const notes = JSON.parse(data); // JSON-String --> JavaScript-Objekt
-  console.log('---> notes', notes);
-}
-
 export default class Home extends React.Component {
+  populateDB() {
+    console.log('---> populateDB in Klasse');
+    const jsonData = JSON.stringify(noteList);
+    AsyncStorage.setItem('notes', jsonData);
+  }
+
+  async readDataFromDB() {
+    const data = await AsyncStorage.getItem('notes'); // siehe Promises
+    const notes = JSON.parse(data); // JSON-String --> JavaScript-Objekt
+    console.log('---> notes', notes);
+  }
+
   componentDidMount() {
     // wird nach render ausgeführt!!!! ---> Lebenszyklus / Lifecycle
-    populateDB();
-    readDataFromDB();
+    this.populateDB();
+    this.readDataFromDB();
   }
 
   render() {
