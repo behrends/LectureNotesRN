@@ -40,13 +40,21 @@ export default class Home extends React.Component {
     );
   }
 
-  async componentDidMount() {
+  async readData() {
     const notes = await Storage.readDataFromDB();
     this.setState({ notes: notes });
   }
 
+  componentDidMount() {
+    this.readData();
+  }
+
   render() {
     const { navigate } = this.props.navigation;
+    // HACK/TODO: lade Daten neu, wenn wir von Create zurückkommen
+    // --> besser wäre die Nutzung von useFocusEffect, denn
+    // dies funktioniert nicht, wenn wir von Edit zurückkommen…
+    if (this.props.route.params?.title) this.readData();
     return (
       <View style={styles.container}>
         <FlatList
