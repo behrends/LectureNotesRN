@@ -5,7 +5,7 @@ export default function NoteListItem(props) {
   return (
     <Pressable onPress={props.onPress} style={styles.container}>
       <Text style={styles.text}>{props.title}</Text>
-      <Pressable onPress={() => alert('delete!')}>
+      <Pressable onPress={props.onDelete}>
         <Text>Löschen</Text>
       </Pressable>
     </Pressable>

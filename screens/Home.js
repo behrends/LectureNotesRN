@@ -22,6 +22,10 @@ export default class Home extends React.Component {
     this.setState({ notes: notes });
   }
 
+  deleteNote() {
+    alert('DELETE NOTE');
+  }
+
   componentDidMount() {
     // wird nach render ausgeführt!!!! ---> Lebenszyklus / Lifecycle
     this.populateDB();
@@ -42,6 +46,7 @@ export default class Home extends React.Component {
                   title: item.title,
                 })
               }
+              onDelete={this.deleteNote}
             />
           )}
         />
