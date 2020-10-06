@@ -46,6 +46,7 @@ export default class Home extends React.Component {
   }
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
         <FlatList
@@ -54,11 +55,7 @@ export default class Home extends React.Component {
           renderItem={({ item }) => (
             <NoteListItem
               title={item.title}
-              onPress={() =>
-                this.props.navigation.navigate('Details', {
-                  title: item.title,
-                })
-              }
+              onPress={() => navigate('Details', { note: item })}
               onDelete={() => this.deleteNote(item.id)}
             />
           )}
@@ -66,7 +63,7 @@ export default class Home extends React.Component {
         />
         <Button
           title="Neue Notiz"
-          onPress={() => this.props.navigation.navigate('Edit')}
+          onPress={() => navigate('Create')}
         />
       </View>
     );

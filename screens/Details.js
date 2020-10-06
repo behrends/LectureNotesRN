@@ -1,20 +1,15 @@
 import React from 'react';
 import { Button, Text, View } from 'react-native';
 
-export default class Details extends React.Component {
-  render() {
-    const title = this.props.route.params.title;
-    const navigation = this.props.navigation;
-    return (
-      <View>
-        <Text style={{ marginTop: 100 }}>{title}</Text>
-        <Button
-          title="Bearbeiten"
-          onPress={() =>
-            navigation.navigate('Edit', { title: title })
-          }
-        />
-      </View>
-    );
-  }
+export default function Details({ route, navigation }) {
+  const note = route.params.note;
+  return (
+    <View>
+      <Text style={{ marginTop: 100 }}>{note.title}</Text>
+      <Button
+        title="Bearbeiten"
+        onPress={() => navigation.navigate('Edit', { note: note })}
+      />
+    </View>
+  );
 }

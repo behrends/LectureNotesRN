@@ -9,7 +9,13 @@ export default class Storage {
     const id = '' + Date.now(); // HACK: use now in milliseconds as ID
     notes.push({ id: id, title: title });
     this.saveNotes(notes);
-    // SQLite ---> siehe Videokurs
+  }
+
+  static async updateNote(note) {
+    const data = await AsyncStorage.getItem('notes');
+    let notes = JSON.parse(data);
+    if (notes === null) notes = [];
+    this.saveNotes(notes);
   }
 
   static async readDataFromDB() {

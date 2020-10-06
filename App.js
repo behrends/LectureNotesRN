@@ -8,6 +8,7 @@ import Home from './screens/Home';
 import Settings from './screens/Settings';
 import Details from './screens/Details';
 import Edit from './screens/Edit';
+import Create from './screens/Create';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,6 +24,7 @@ function HomeStack() {
       <Stack.Screen name="HomeScreen" component={Home} />
       <Stack.Screen name="Details" component={Details} />
       <Stack.Screen name="Edit" component={Edit} />
+      <Stack.Screen name="Create" component={Create} />
     </Stack.Navigator>
   );
 }
