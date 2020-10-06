@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
 
 export default class Edit extends React.Component {
-  state = { input: this.props.route.params.title };
+  state = { input: this.props.route.params?.title };
 
   render() {
     return (

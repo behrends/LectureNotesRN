@@ -56,7 +56,10 @@ export default class Home extends React.Component {
             />
           )}
         />
-        <Button title="Neue Notiz" onPress={() => alert('!!!!!')} />
+        <Button
+          title="Neue Notiz"
+          onPress={() => this.props.navigation.navigate('Edit')}
+        />
       </View>
     );
   }
