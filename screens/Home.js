@@ -22,13 +22,19 @@ export default class Home extends React.Component {
     this.setState({ notes: notes });
   }
 
-  deleteNote() {
-    alert('DELETE NOTE');
-  }
+  deleteNote = (id) => {
+    // alert(`Wirklich Notiz mit ID ${id} löschen?`);
+    const currentNotes = this.state.notes;
+    // liefere alle Notizen außer die zum Löschen
+    const newNotes = currentNotes.filter((item) => item.id !== id);
+    const jsonData = JSON.stringify(newNotes);
+    AsyncStorage.setItem('notes', jsonData);
+    this.setState({ notes: newNotes });
+  };
 
   componentDidMount() {
     // wird nach render ausgeführt!!!! ---> Lebenszyklus / Lifecycle
-    this.populateDB();
+    // this.populateDB();
     this.readDataFromDB();
   }
 
@@ -46,7 +52,7 @@ export default class Home extends React.Component {
                   title: item.title,
                 })
               }
-              onDelete={this.deleteNote}
+              onDelete={() => this.deleteNote(item.id)}
             />
           )}
         />
