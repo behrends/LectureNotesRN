@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
 export default class Storage {
-  // TODO: aufräumen und vereinfachen
+  // TODO: aufräumen und vereinfachen…
+  // oder SQLite/Firebase verwenden ;-)
   static async createNote(title) {
     const data = await AsyncStorage.getItem('notes');
     let notes = JSON.parse(data);
