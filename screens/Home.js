@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 export default class Home extends React.Component {
   state = { notes: [] };
 
+  // TODO: verwende Storage-Klasse
   async readDataFromDB() {
     const data = await AsyncStorage.getItem('notes'); // siehe Promises
     const notes = JSON.parse(data); // JSON-String --> JavaScript-Objekt
