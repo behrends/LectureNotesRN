@@ -3,15 +3,15 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import NoteListItem from '../components/NoteListItem';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const noteList = [
-  { id: '1', title: 'Notiz' },
-  { id: '2', title: 'Bemerkung' },
-  { id: '3', title: 'Witz' },
-];
-
 export default class Home extends React.Component {
+  state = { notes: [] };
+
   populateDB() {
-    console.log('---> populateDB in Klasse');
+    const noteList = [
+      { id: '1', title: 'Notiz 12' },
+      { id: '2', title: 'Bemerkung 34' },
+      { id: '3', title: 'Witz 5678' },
+    ];
     const jsonData = JSON.stringify(noteList);
     AsyncStorage.setItem('notes', jsonData);
   }
@@ -19,7 +19,7 @@ export default class Home extends React.Component {
   async readDataFromDB() {
     const data = await AsyncStorage.getItem('notes'); // siehe Promises
     const notes = JSON.parse(data); // JSON-String --> JavaScript-Objekt
-    console.log('---> notes', notes);
+    this.setState({ notes: notes });
   }
 
   componentDidMount() {
@@ -29,12 +29,11 @@ export default class Home extends React.Component {
   }
 
   render() {
-    console.log('render');
     return (
       <View style={styles.container}>
         <FlatList
           style={styles.list}
-          data={noteList}
+          data={this.state.notes}
           renderItem={({ item }) => (
             <NoteListItem
               title={item.title}
