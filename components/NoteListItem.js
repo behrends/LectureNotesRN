@@ -1,12 +1,17 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
-// TODO: icon
+import * as Icon from '@expo/vector-icons';
+
 export default function NoteListItem(props) {
   return (
     <Pressable onPress={props.onPress} style={styles.container}>
       <Text style={styles.text}>{props.title}</Text>
       <Pressable onPress={props.onDelete}>
-        <Text>Löschen</Text>
+        <Icon.MaterialCommunityIcons
+          name="delete"
+          size={20}
+          color="lightgray"
+        />
       </Pressable>
     </Pressable>
   );
