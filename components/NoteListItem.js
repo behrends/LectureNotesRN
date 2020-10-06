@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
-
+// TODO: icon
 export default function NoteListItem(props) {
   return (
     <Pressable onPress={props.onPress} style={styles.container}>
