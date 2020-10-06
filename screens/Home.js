@@ -9,7 +9,6 @@ const noteList = [
   { id: '3', title: 'Witz' },
 ];
 
-// DB mit initialen Beispiel-Daten befüllen
 function populateDB() {
   console.log('---> populateDB');
   // JSON – JavaScript Object Notation
@@ -24,28 +23,30 @@ async function readDataFromDB() {
   console.log('---> notes', notes);
 }
 
-export default function Home({ navigation }) {
-  // const navigation = props.navigation; dies passiert in ({navigation})
+export default class Home extends React.Component {
+  render() {
+    populateDB();
+    readDataFromDB();
 
-  populateDB();
-  readDataFromDB();
-
-  return (
-    <View style={styles.container}>
-      <FlatList
-        style={styles.list}
-        data={noteList}
-        renderItem={({ item }) => (
-          <NoteListItem
-            title={item.title}
-            onPress={() =>
-              navigation.navigate('Details', { title: item.title })
-            }
-          />
-        )}
-      />
-    </View>
-  );
+    return (
+      <View style={styles.container}>
+        <FlatList
+          style={styles.list}
+          data={noteList}
+          renderItem={({ item }) => (
+            <NoteListItem
+              title={item.title}
+              onPress={() =>
+                this.props.navigation.navigate('Details', {
+                  title: item.title,
+                })
+              }
+            />
+          )}
+        />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
