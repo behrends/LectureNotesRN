@@ -7,7 +7,7 @@ export default class Storage {
     if (notes === null) notes = [];
     const id = '' + Date.now(); // HACK: use now in milliseconds as ID
     notes.push({ id: id, title: title });
-    saveNotes();
+    this.saveNotes(notes);
     // SQLite ---> siehe Videokurs
   }
 
