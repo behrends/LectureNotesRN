@@ -1,7 +1,21 @@
 import React from 'react';
-import { Button, FlatList, StyleSheet, View } from 'react-native';
+import {
+  Button,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import NoteListItem from '../components/NoteListItem';
 import AsyncStorage from '@react-native-community/async-storage';
+
+function NoteListEmpty() {
+  return (
+    <Text style={{ fontSize: 32, textAlign: 'center' }}>
+      Keine Notizen
+    </Text>
+  );
+}
 
 export default class Home extends React.Component {
   state = { notes: [] };
@@ -24,7 +38,6 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
-    // wird nach render ausgeführt!!!! ---> Lebenszyklus / Lifecycle
     this.readDataFromDB();
   }
 
@@ -45,6 +58,7 @@ export default class Home extends React.Component {
               onDelete={() => this.deleteNote(item.id)}
             />
           )}
+          ListEmptyComponent={<NoteListEmpty />}
         />
         <Button
           title="Neue Notiz"
