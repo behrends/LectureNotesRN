@@ -42,16 +42,17 @@ export default class Home extends React.Component {
   }
 
   async readData() {
-    const notes = await Storage.readDataFromDB();
-    this.setState({ notes: notes });
-
+    const notes = [];
     // TEST Firebase
     let query = await Firebase.db.collection('notes').get();
     query.forEach((note) => {
-      console.log(note.id);
-      console.log(note.data().title);
-      console.log(note.data().text);
+      notes.push({
+        id: note.id,
+        title: note.data().title,
+        text: note.data().text,
+      });
     });
+    this.setState({ notes: notes });
   }
 
   componentDidMount() {
