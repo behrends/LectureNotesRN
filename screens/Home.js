@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import NoteListItem from '../components/NoteListItem';
 import Storage from '../util/Storage';
+import Firebase from '../util/Firebase';
 
 function NoteListEmpty() {
   return (
@@ -43,9 +44,18 @@ export default class Home extends React.Component {
   async readData() {
     const notes = await Storage.readDataFromDB();
     this.setState({ notes: notes });
+
+    // TEST Firebase
+    let query = await Firebase.db.collection('notes').get();
+    query.forEach((note) => {
+      console.log(note.id);
+      console.log(note.data().title);
+      console.log(note.data().text);
+    });
   }
 
   componentDidMount() {
+    Firebase.init();
     this.readData();
   }
 
