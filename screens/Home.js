@@ -43,7 +43,6 @@ export default class Home extends React.Component {
 
   async readData() {
     const notes = [];
-    // TEST Firebase
     let query = await Firebase.db.collection('notes').get();
     query.forEach((note) => {
       notes.push({
