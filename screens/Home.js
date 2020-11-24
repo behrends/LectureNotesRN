@@ -20,7 +20,7 @@ function NoteListEmpty() {
 }
 
 export default class Home extends React.Component {
-  state = { notes: [] };
+  state = { notes: [], firebaseError: false };
 
   doDeleteNote(id) {
     const currentNotes = this.state.notes;
@@ -55,11 +55,25 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
-    Firebase.init();
-    this.readData();
+    if (Firebase.init()) {
+      this.readData();
+    } else {
+      this.setState({ firebaseError: true });
+    }
   }
 
   render() {
+    if (this.state.firebaseError) {
+      return (
+        <View style={styles.container}>
+          <Text>
+            Die Verbindung zu Firebase konnte nicht hergestellt
+            werden.
+          </Text>
+          <Text>Überprüfe bitte die Firebase-Konfiguration.</Text>
+        </View>
+      );
+    }
     const { navigate } = this.props.navigation;
     // HACK/TODO: lade Daten neu, wenn wir von Create zurückkommen
     // --> besser wäre die Nutzung von useFocusEffect, denn

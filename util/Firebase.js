@@ -9,9 +9,14 @@ export default class Firebase {
   static db;
 
   static init() {
-    if (firebase.apps.length === 0) {
-      firebase.initializeApp(firebaseConfig);
+    try {
+      if (firebase.apps.length === 0) {
+        firebase.initializeApp(firebaseConfig);
+      }
+      Firebase.db = firebase.firestore();
+      return true;
+    } catch (exception) {
+      return false;
     }
-    Firebase.db = firebase.firestore();
   }
 }
