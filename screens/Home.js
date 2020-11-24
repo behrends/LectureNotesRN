@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import NoteListItem from '../components/NoteListItem';
 import Storage from '../util/Storage';
-import Firebase from '../util/Firebase';
 
 function NoteListEmpty() {
   return (
@@ -25,37 +24,29 @@ export default class Home extends React.Component {
   doDeleteNote(id) {
     const currentNotes = this.state.notes;
     const newNotes = currentNotes.filter((item) => item.id !== id);
-    Storage.saveNotes(newNotes);
+    Storage.deleteNote(id);
     this.setState({ notes: newNotes });
   }
 
-  deleteNote(id) {
+  deleteNote(item) {
     Alert.alert(
       'Notiz löschen',
-      `Wirklich Notiz mit ID ${id} löschen?`,
+      `Wirklich Notiz ${item.title} löschen?`,
       [
         { text: 'Abbrechen', style: 'cancel' },
-        { text: 'OK', onPress: () => this.doDeleteNote(id) },
+        { text: 'OK', onPress: () => this.doDeleteNote(item.id) },
       ],
       { cancelable: true }
     );
   }
 
   async readData() {
-    const notes = [];
-    let query = await Firebase.db.collection('notes').get();
-    query.forEach((note) => {
-      notes.push({
-        id: note.id,
-        title: note.data().title,
-        text: note.data().text,
-      });
-    });
+    const notes = await Storage.readData();
     this.setState({ notes: notes });
   }
 
   componentDidMount() {
-    if (Firebase.init()) {
+    if (Storage.init()) {
       this.readData();
     } else {
       this.setState({ firebaseError: true });
@@ -88,7 +79,7 @@ export default class Home extends React.Component {
             <NoteListItem
               title={item.title}
               onPress={() => navigate('Details', { note: item })}
-              onDelete={() => this.deleteNote(item.id)}
+              onDelete={() => this.deleteNote(item)}
             />
           )}
           ListEmptyComponent={<NoteListEmpty />}

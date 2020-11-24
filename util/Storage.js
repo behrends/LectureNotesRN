@@ -1,33 +1,39 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import Firebase from '../util/Firebase';
 
 export default class Storage {
-  // TODO: aufräumen und vereinfachen…
-  // oder SQLite/Firebase verwenden ;-)
-  static async createNote(title) {
-    const data = await AsyncStorage.getItem('notes');
-    let notes = JSON.parse(data);
-    if (notes === null) notes = [];
-    const id = '' + Date.now(); // HACK: use now in milliseconds as ID
-    notes.push({ id: id, title: title });
-    this.saveNotes(notes);
+  // TODO: private (static) field for collection name
+  // FIX: update home screen after edit
+  // TODO: navigation with id instead of note?
+
+  static init() {
+    return Firebase.init();
+  }
+
+  static createNote(title) {
+    Firebase.db.collection('notes').add({ title });
+  }
+
+  static async deleteNote(id) {
+    Firebase.db.collection('notes').doc(id).delete();
   }
 
   static async updateNote(note) {
-    const data = await AsyncStorage.getItem('notes');
-    const notes = JSON.parse(data);
-    const index = notes.findIndex((item) => item.id === note.id);
-    notes[index] = note;
-    this.saveNotes(notes);
+    Firebase.db
+      .collection('notes')
+      .doc(note.id)
+      .update({ title: note.title });
   }
 
-  static async readDataFromDB() {
-    const data = await AsyncStorage.getItem('notes'); // siehe Promises
-    let notes = JSON.parse(data); // JSON-String --> JavaScript-Objekt
-    if (notes === null) notes = [];
+  static async readData() {
+    const notes = [];
+    let query = await Firebase.db.collection('notes').get();
+    query.forEach((note) => {
+      notes.push({
+        id: note.id,
+        title: note.data().title,
+        text: note.data().text,
+      });
+    });
     return notes;
-  }
-
-  static saveNotes(notes) {
-    AsyncStorage.setItem('notes', JSON.stringify(notes));
   }
 }
