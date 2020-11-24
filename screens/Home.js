@@ -67,6 +67,7 @@ export default class Home extends React.Component {
     }
     const { navigate } = this.props.navigation;
     // HACK/TODO: lade Daten neu, wenn wir von Create zurückkommen
+    // und auch von Edit -> Details -> Home
     // --> besser wäre die Nutzung von useFocusEffect, denn
     // dies funktioniert nicht, wenn wir von Edit zurückkommen…
     if (this.props.route.params?.title) this.readData();
