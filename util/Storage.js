@@ -24,7 +24,10 @@ export default class Storage {
 
   static async readData() {
     const notes = [];
-    let query = await Firebase.db.collection(this.#COLLECTION).get();
+    let query = await Firebase.db
+      .collection(this.#COLLECTION)
+      .orderBy('title')
+      .get();
     query.forEach((note) => {
       notes.push({
         id: note.id,
