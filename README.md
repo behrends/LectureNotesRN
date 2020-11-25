@@ -7,6 +7,7 @@ Abhängigkeiten des Projekts installieren, indem im Projektverzeichnis `npm inst
 Für die Verwendung von Firebase (Firestore) muss eine Datei `util/FirebaseConfig.js` erstellt werden, die die Konfigurationsdaten in dieser Form bereit stellt:
 
 ```
+// util/FirebaseConfig.js
 export default {
   apiKey: 'WERT EINTRAGEN',
   authDomain: 'WERT EINTRAGEN',
