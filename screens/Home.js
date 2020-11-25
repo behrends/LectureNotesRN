@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Button,
@@ -18,80 +18,74 @@ function NoteListEmpty() {
   );
 }
 
-export default class Home extends React.Component {
-  state = { notes: [], firebaseError: false };
+export default function Home({ navigation, route }) {
+  const [notes, setNotes] = useState([]);
+  const [firebaseError, setFirebaseError] = useState(false);
 
-  doDeleteNote(id) {
-    const currentNotes = this.state.notes;
-    const newNotes = currentNotes.filter((item) => item.id !== id);
+  useEffect(() => {
+    if (Storage.init()) {
+      readData();
+    } else {
+      setFirebaseError(true);
+    }
+  }, []);
+
+  function doDeleteNote(id) {
+    const newNotes = notes.filter((item) => item.id !== id);
     Storage.deleteNote(id);
-    this.setState({ notes: newNotes });
+    setNotes(newNotes);
   }
 
-  deleteNote(item) {
+  function deleteNote(item) {
     Alert.alert(
       'Notiz löschen',
       `Wirklich Notiz ${item.title} löschen?`,
       [
         { text: 'Abbrechen', style: 'cancel' },
-        { text: 'OK', onPress: () => this.doDeleteNote(item.id) },
+        { text: 'OK', onPress: () => doDeleteNote(item.id) },
       ],
       { cancelable: true }
     );
   }
 
-  async readData() {
+  async function readData() {
     const notes = await Storage.readData();
-    this.setState({ notes: notes });
+    setNotes(notes);
   }
 
-  componentDidMount() {
-    if (Storage.init()) {
-      this.readData();
-    } else {
-      this.setState({ firebaseError: true });
-    }
-  }
-
-  render() {
-    if (this.state.firebaseError) {
-      return (
-        <View style={styles.container}>
-          <Text>
-            Die Verbindung zu Firebase konnte nicht hergestellt
-            werden.
-          </Text>
-          <Text>Überprüfe bitte die Firebase-Konfiguration.</Text>
-        </View>
-      );
-    }
-    const { navigate } = this.props.navigation;
-    // HACK/TODO: lade Daten neu, wenn wir von Create zurückkommen
-    // und auch von Edit -> Details -> Home
-    // --> besser wäre die Nutzung von useFocusEffect, denn
-    // dies funktioniert nicht, wenn wir von Edit zurückkommen…
-    if (this.props.route.params?.title) this.readData();
+  if (firebaseError) {
     return (
       <View style={styles.container}>
-        <FlatList
-          style={styles.list}
-          data={this.state.notes}
-          renderItem={({ item }) => (
-            <NoteListItem
-              title={item.title}
-              onPress={() => navigate('Details', { note: item })}
-              onDelete={() => this.deleteNote(item)}
-            />
-          )}
-          ListEmptyComponent={<NoteListEmpty />}
-        />
-        <Button
-          title="Neue Notiz"
-          onPress={() => navigate('Create')}
-        />
+        <Text>
+          Die Verbindung zu Firebase konnte nicht hergestellt werden.
+        </Text>
+        <Text>Überprüfe bitte die Firebase-Konfiguration.</Text>
       </View>
     );
   }
+  const { navigate } = navigation;
+  // HACK/TODO: lade Daten neu, wenn wir von Create zurückkommen
+  // und auch von Edit -> Details -> Home
+  // --> besser wäre die Nutzung von useFocusEffect, denn
+  // dies funktioniert nicht, wenn wir von Edit zurückkommen…
+  if (route.params?.title) readData();
+  return (
+    <View style={styles.container}>
+      <FlatList
+        style={styles.list}
+        data={notes}
+        renderItem={({ item }) => (
+          <NoteListItem
+            title={item.title}
+            onPress={() => navigate('Details', { note: item })}
+            onDelete={() => deleteNote(item)}
+          />
+        )}
+        ListEmptyComponent={<NoteListEmpty />}
+      />
+      <Button title="Neue Notiz" onPress={() => navigate('Create')} />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
