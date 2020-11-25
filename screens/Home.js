@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Alert,
   Button,
@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import NoteListItem from '../components/NoteListItem';
 import Storage from '../util/Storage';
 
@@ -18,17 +19,24 @@ function NoteListEmpty() {
   );
 }
 
-export default function Home({ navigation, route }) {
+export default function Home({ navigation }) {
   const [notes, setNotes] = useState([]);
   const [firebaseError, setFirebaseError] = useState(false);
 
-  useEffect(() => {
-    if (Storage.init()) {
-      readData();
-    } else {
-      setFirebaseError(true);
-    }
-  }, []);
+  // load notes every time this screen is focussed
+  useFocusEffect(
+    useCallback(() => {
+      const fetchData = async () => {
+        if (Storage.init()) {
+          const data = await Storage.readData();
+          setNotes(data);
+        } else {
+          setFirebaseError(true);
+        }
+      };
+      fetchData();
+    }, [])
+  );
 
   function doDeleteNote(id) {
     const newNotes = notes.filter((item) => item.id !== id);
@@ -48,12 +56,6 @@ export default function Home({ navigation, route }) {
     );
   }
 
-  // TODO: inline in useEffect
-  async function readData() {
-    const notes = await Storage.readData();
-    setNotes(notes);
-  }
-
   if (firebaseError) {
     return (
       <View style={styles.container}>
@@ -66,11 +68,6 @@ export default function Home({ navigation, route }) {
     );
   }
   const { navigate } = navigation;
-  // HACK/TODO: lade Daten neu, wenn wir von Create zurückkommen
-  // und auch von Edit -> Details -> Home
-  // --> besser wäre die Nutzung von useFocusEffect, denn
-  // dies funktioniert nicht, wenn wir von Edit zurückkommen…
-  if (route.params?.title) readData();
   return (
     <View style={styles.container}>
       <FlatList

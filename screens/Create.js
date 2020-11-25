@@ -8,7 +8,7 @@ export default function Create({ route, navigation }) {
       title={route.params?.title}
       onSave={(title) => {
         Storage.createNote(title);
-        navigation.navigate('HomeScreen', { title: title });
+        navigation.navigate('HomeScreen');
       }}
     />
   );
