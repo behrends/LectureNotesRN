@@ -1,9 +1,6 @@
 import firebase from 'firebase';
 import 'firebase/firestore';
-
-const firebaseConfig = {
-  // TODO --> hier die Firebase - Config einfügen
-};
+import firebaseConfig from './FirebaseConfig';
 
 export default class Firebase {
   static db;

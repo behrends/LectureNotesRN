@@ -48,6 +48,7 @@ export default function Home({ navigation, route }) {
     );
   }
 
+  // TODO: inline in useEffect
   async function readData() {
     const notes = await Storage.readData();
     setNotes(notes);
@@ -56,10 +57,11 @@ export default function Home({ navigation, route }) {
   if (firebaseError) {
     return (
       <View style={styles.container}>
-        <Text>
+        <Text style={styles.error}>
           Die Verbindung zu Firebase konnte nicht hergestellt werden.
+          Es werden eine Internetverbindung und gültige
+          Konfigurationsdaten in util/FirebaseConfig.js benötigt.
         </Text>
-        <Text>Überprüfe bitte die Firebase-Konfiguration.</Text>
       </View>
     );
   }
@@ -93,6 +95,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  error: {
+    padding: 20,
+    textAlign: 'center',
   },
   list: {
     paddingHorizontal: 10,
