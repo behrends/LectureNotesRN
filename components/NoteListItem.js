@@ -2,11 +2,17 @@ import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import * as Icon from '@expo/vector-icons';
 
-export default function NoteListItem(props) {
+export default function NoteListItem({
+  title,
+  onPress,
+  onDelete,
+  darkMode,
+}) {
+  const color = darkMode ? '#fff' : '#000';
   return (
-    <Pressable onPress={props.onPress} style={styles.container}>
-      <Text style={styles.text}>{props.title}</Text>
-      <Pressable onPress={props.onDelete}>
+    <Pressable onPress={onPress} style={styles.container}>
+      <Text style={[styles.text, { color }]}>{title}</Text>
+      <Pressable onPress={onDelete}>
         <Icon.MaterialCommunityIcons
           name="delete"
           size={20}

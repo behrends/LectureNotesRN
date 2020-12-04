@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import {
   Alert,
   Button,
@@ -8,6 +8,8 @@ import {
   View,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+
+import { DarkModeContext } from '../hooks/DarkModeContext';
 import NoteListItem from '../components/NoteListItem';
 import Storage from '../util/Storage';
 
@@ -22,6 +24,7 @@ function NoteListEmpty() {
 export default function Home({ navigation }) {
   const [notes, setNotes] = useState([]);
   const [firebaseError, setFirebaseError] = useState(false);
+  const { darkMode } = useContext(DarkModeContext);
 
   // load notes every time this screen is focussed
   useFocusEffect(
@@ -56,6 +59,8 @@ export default function Home({ navigation }) {
     );
   }
 
+  const backgroundColor = darkMode ? '#000' : '#fff';
+
   if (firebaseError) {
     return (
       <View style={styles.container}>
@@ -69,7 +74,7 @@ export default function Home({ navigation }) {
   }
   const { navigate } = navigation;
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
       <FlatList
         style={styles.list}
         data={notes}
@@ -78,6 +83,7 @@ export default function Home({ navigation }) {
             title={item.title}
             onPress={() => navigate('Details', { note: item })}
             onDelete={() => deleteNote(item)}
+            darkMode={darkMode}
           />
         )}
         ListEmptyComponent={<NoteListEmpty />}
