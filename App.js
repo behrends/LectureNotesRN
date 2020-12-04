@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as Icon from '@expo/vector-icons';
 
 import Home from './screens/Home';
+import Photos from './screens/Photos';
 import Settings from './screens/Settings';
 import Details from './screens/Details';
 import Edit from './screens/Edit';
@@ -39,6 +40,8 @@ export default function App() {
 
             if (route.name === 'Home') {
               icon = focused ? 'home' : 'home-outline';
+            } else if (route.name === 'Photos') {
+              icon = focused ? 'image' : 'image-outline';
             } else if (route.name === 'Settings') {
               icon = focused ? 'settings' : 'settings-outline';
             }
@@ -61,6 +64,11 @@ export default function App() {
           name="Home"
           component={HomeStack}
           options={{ title: 'Notizen' }}
+        />
+        <Tab.Screen
+          name="Photos"
+          component={Photos}
+          options={{ title: 'Fotos' }}
         />
         <Tab.Screen
           name="Settings"
