@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { DarkModeContext } from './hooks/DarkModeContext';
 import AppNavigator from './AppNavigator';
@@ -7,8 +8,24 @@ import AppNavigator from './AppNavigator';
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
 
+  useEffect(() => {
+    async function loadSettings() {
+      let settings = await AsyncStorage.getItem('settings');
+      try {
+        settings = JSON.parse(settings);
+        setDarkMode(settings.darkMode);
+      } catch (e) {}
+    }
+    loadSettings();
+  }, []);
+
   function toggleDarkMode() {
-    setDarkMode((darkMode) => !darkMode);
+    const newMode = !darkMode;
+    setDarkMode(newMode);
+    AsyncStorage.setItem(
+      'settings',
+      JSON.stringify({ darkMode: newMode })
+    );
   }
 
   const statusBar = darkMode ? 'light' : 'dark';
