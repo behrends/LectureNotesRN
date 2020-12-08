@@ -27,10 +27,34 @@ export default ({ darkMode }) => {
           },
         }}
       >
-        <Stack.Screen name="HomeScreen" component={Home} />
-        <Stack.Screen name="Details" component={Details} />
-        <Stack.Screen name="Edit" component={Edit} />
-        <Stack.Screen name="Create" component={Create} />
+        <Stack.Screen
+          name="HomeScreen"
+          component={Home}
+          options={{ title: 'Notizen', headerLargeTitle: true }}
+        />
+        <Stack.Screen
+          name="Details"
+          component={Details}
+          options={{ title: 'Notiz' }}
+        />
+        <Stack.Screen
+          name="Edit"
+          component={Edit}
+          options={{
+            title: 'Notiz bearbeiten',
+            stackAnimation: 'flip',
+            stackPresentation: 'modal',
+          }}
+        />
+        <Stack.Screen
+          name="Create"
+          component={Create}
+          options={{
+            title: 'Neue Notiz',
+            stackAnimation: 'flip',
+            stackPresentation: 'modal',
+          }}
+        />
       </Stack.Navigator>
     );
   }
