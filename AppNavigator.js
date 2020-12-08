@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { enableScreens } from 'react-native-screens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import * as Icon from '@expo/vector-icons';
 
 import Home from './screens/Home';
@@ -13,7 +14,8 @@ import Create from './screens/Create';
 
 const Tab = createBottomTabNavigator();
 
-const Stack = createStackNavigator();
+enableScreens();
+const Stack = createNativeStackNavigator();
 
 export default ({ darkMode }) => {
   function HomeStack() {
